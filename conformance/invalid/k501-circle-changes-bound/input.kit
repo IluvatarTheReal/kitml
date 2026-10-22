@@ -1,0 +1,13 @@
+summon kitml 1
+
+covenant Database
+  name : text
+seal
+
+soul db is Database
+  bound name = "payments"
+seal
+
+circle 3 staging
+  db.name = "payments-test"
+seal

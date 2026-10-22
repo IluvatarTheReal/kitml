@@ -1,0 +1,27 @@
+summon kitml 1
+
+covenant Service
+  replicas  : number whole
+  log-level : one of [debug, info, warn]
+  memory    : number MB
+seal
+
+soul web is Service
+  replicas  = 1
+  log-level = debug
+  memory    = 512 MB
+seal
+
+circle 1 staging
+  web.replicas = 2
+seal
+
+circle 1 production
+  web.replicas  = 6
+  web.log-level = warn
+  web.memory    = 2 GB
+seal
+
+circle 2 surge
+  web.replicas = 20
+seal

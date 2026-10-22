@@ -1,0 +1,1 @@
+{"a":{"$is":"Server","host":"a.local","port":9000,"timeout":{"value":30,"unit":"s"},"disk":{"value":50,"unit":"GB"},"tags":[]}}

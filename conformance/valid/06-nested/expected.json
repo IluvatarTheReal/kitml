@@ -1,0 +1,1 @@
+{"c":{"$is":"Camera","sensor":{"width":{"value":36,"unit":"mm"},"height":{"value":24,"unit":"mm"}},"settings":{"iso":200,"mode":"manual"},"network":{"ip":"10.0.0.2","dhcp":false}}}

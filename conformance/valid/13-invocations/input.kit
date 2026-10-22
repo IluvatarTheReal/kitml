@@ -1,0 +1,20 @@
+summon kitml 1
+
+covenant Server
+  bound hostname : text
+  region         : one of [us-east, eu-west]
+  cpus           : number whole
+  memory         : number GB
+  invoke memory-per-cpu : number GB = memory / cpus
+  invoke fqdn : text = "{hostname}.{region}.example.com"
+  invoke memory-mib = memory in MiB
+  invoke size = if cpus > 16 then large else small
+seal
+
+soul api-1 is Server
+  bound hostname = "api-1"
+  region         = us-east
+  cpus           = 8
+  memory         = 32 GB
+  invoke label = upper(hostname)
+seal

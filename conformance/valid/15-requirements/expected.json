@@ -1,0 +1,1 @@
+{"r101":{"$is":"Room","capacity":2},"b1":{"$is":"Booking","check-in":"2026-11-01","check-out":"2026-11-03","guests":2,"room":{"$link":"r101"},"nights":2}}

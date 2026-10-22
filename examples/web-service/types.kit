@@ -1,0 +1,29 @@
+summon kitml 1
+
+covenant Team
+  name  : text
+  email : text matching "^[^@]+@[^@]+$"
+seal
+
+covenant Database
+  bound name      : text
+  host            : text
+  port            : number whole default 5432
+  max-connections : number whole between 1 and 1000
+  sealed user     : text
+  sealed password : text
+seal
+
+covenant Service
+  bound name : text
+  replicas   : number whole between 1 and 100
+  memory     : number MB
+  timeout    : number s default 30 s
+  log-level  : one of [debug, info, warn, error]
+  domain     : text
+  database   : -> Database
+  owner      : -> Team
+  cert       : text
+  invoke url : text = "https://{domain}"
+  require memory >= 256 MB "Each replica needs at least 256 MB"
+seal

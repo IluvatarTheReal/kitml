@@ -1,0 +1,1 @@
+{"ops":{"$is":"Team","name":"Ops"},"web":{"$is":"Service","tags":["web","canary","eu"],"owner":{"$link":"sre"}},"sre":{"$is":"Team","name":"SRE"}}

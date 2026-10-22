@@ -1,0 +1,1 @@
+{"a":{"$is":"Server","cpus":8,"memory":{"value":16,"unit":"GB"}},"b":{"$is":"Server","cpus":32,"memory":{"value":128,"unit":"GB"}},"c":{"$is":"Server","cpus":16,"memory":{"value":512,"unit":"GB"}},"fleet":{"$is":"Report","total-memory":{"value":656,"unit":"GB"},"big":2,"avg-cpus":18.6666666667,"roomy":[{"$link":"b"},{"$link":"c"}],"smallest":{"value":16,"unit":"GB"}}}

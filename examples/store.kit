@@ -1,0 +1,62 @@
+summon kitml 1 zone America/Toronto
+
+key finance = "kpub1m5t8w2...x7c"
+
+covenant Category
+  name : text
+seal
+
+covenant Supplier
+  name    : text
+  country : text length between 2 and 2
+seal
+
+covenant Product
+  bound sku    : text unique matching "^[A-Z]{3}-[0-9]{4}$"
+  name         : text
+  category     : -> Category
+  supplier     : -> Supplier
+  list-price   : number money
+  price        : number money
+  stock        : number whole default 0
+  weight       : number kg
+  sealed cost  : number money
+  badge        : text optional
+  require currency(price) == currency(list-price)  "Prices must share a currency"
+  require price <= list-price         "Price above list price"
+  invoke discount  : number % = round((list-price - price) / list-price * 100, 0)
+  invoke in-stock  : bool = stock > 0
+  invoke heavy     : bool = weight > 1 kg
+seal
+
+soul audio is Category
+  name = "Audio"
+seal
+
+soul acme-audio is Supplier
+  name    = "Acme Audio Ltd."
+  country = "CA"
+seal
+
+soul studio-headphones is Product
+  bound sku   = "AUD-0142"
+  name        = "Studio Headphones"
+  category   -> audio
+  supplier   -> acme-audio
+  list-price  = 149.99 USD
+  price       = 149.99 USD
+  stock       = 320
+  weight      = 280 g
+  from 2026-11-27 until 2026-12-01
+    price     = 99.99 USD
+    badge     = "Black Friday"
+  sealed to finance
+    cost      = sealed "kv1:2b9f44...d10"
+seal
+
+circle 1 canada
+  studio-headphones.list-price = 199.99 CAD
+  studio-headphones.price      = 199.99 CAD
+  from 2026-11-27 until 2026-12-01
+    studio-headphones.price    = 134.99 CAD
+seal

@@ -1,0 +1,1 @@
+{"db":{"$is":"Database","host":"db.internal","password":{"$sealed":["ops","audit"]},"cost":{"$sealed":["ops","audit"]}}}

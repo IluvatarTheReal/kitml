@@ -1,0 +1,12 @@
+summon kitml 1
+
+key ops = "kpub1abc"
+
+covenant Database
+  password : text
+seal
+
+soul db is Database
+  sealed to ops
+    password = "hunter2"
+seal

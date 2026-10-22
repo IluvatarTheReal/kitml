@@ -1,0 +1,12 @@
+summon kitml 1
+
+covenant Booking
+  check-in  : date
+  check-out : date
+  require check-out > check-in "Check-out must be after check-in"
+seal
+
+soul b is Booking
+  check-in  = 2026-11-03
+  check-out = 2026-11-01
+seal

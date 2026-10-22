@@ -1,0 +1,17 @@
+summon kitml 1
+
+covenant Team
+  name : text
+seal
+covenant Lens
+  mount : one of [RF]
+seal
+covenant Service
+  owner : -> Team
+seal
+soul l is Lens
+  mount = RF
+seal
+soul web is Service
+  owner -> l
+seal

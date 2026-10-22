@@ -1,0 +1,12 @@
+summon kitml 1
+
+covenant Database
+  name : text optional
+seal
+
+soul db is Database
+  bound name = "payments"
+seal
+circle 1 prod
+  banish db.name
+seal

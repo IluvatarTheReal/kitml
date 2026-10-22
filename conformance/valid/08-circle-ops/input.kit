@@ -1,0 +1,30 @@
+summon kitml 1
+
+covenant Team
+  name : text
+seal
+
+covenant Service
+  tags       : list of text
+  owner      : -> Team
+  debug-port : number optional
+seal
+
+soul ops is Team
+  name = "Ops"
+seal
+
+soul web is Service
+  tags       = ["web"]
+  owner     -> ops
+  debug-port = 9229
+seal
+
+circle 1 production
+  web.tags += ["canary", "eu"]
+  banish web.debug-port
+  web.owner -> sre
+  soul sre is Team
+    name = "SRE"
+  seal
+seal

@@ -1,0 +1,1 @@
+{"lap":{"$is":"Laptop","serial":"L1","model":"Book","memory":{"value":16,"unit":"GB"}},"phone":{"$is":"Device","serial":"P1","model":"Phone"},"ana":{"$is":"Person","name":"Ana","primary":{"$link":"lap"},"devices":[{"$link":"lap"},{"$link":"phone"}],"manager":{"$link":"bo"}},"bo":{"$is":"Person","name":"Bo","primary":{"$link":"phone"},"devices":[],"manager":{"$link":"ana"}}}

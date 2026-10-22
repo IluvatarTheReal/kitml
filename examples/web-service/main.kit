@@ -1,0 +1,29 @@
+summon kitml 1
+
+possess "types.kit"
+possess "teams.kit"
+possess "circles/*.kit"
+
+key ops = "kpub1z7k2m4...p0a"
+
+soul orders-db is Database
+  bound name      = "orders"
+  host            = "localhost"
+  max-connections = 20
+  sealed to ops
+    user     = sealed "kv1:7aa1f0...c33"
+    password = sealed "kv1:e4c912...0b8"
+seal
+
+soul orders-api is Service
+  bound name = "orders-api"
+  replicas   = 1
+  memory     = 512 MB
+  log-level  = debug
+  domain     = "localhost:8080"
+  database  -> orders-db
+  owner     -> platform-team       -- defined in teams.kit
+  cert       = "certs/2026.pem"
+  from 2026-12-15
+    cert     = "certs/2027.pem"    -- new certificate takes over automatically
+seal

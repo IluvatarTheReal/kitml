@@ -1,0 +1,17 @@
+summon kitml 1
+
+covenant Box
+  dims  : { w: number, h: number }
+  label : text
+seal
+
+soul b is Box
+  bound dims
+    w = 1
+    h = 2
+  label = "x"
+seal
+
+circle 1 relabel
+  b.label = "y"
+seal

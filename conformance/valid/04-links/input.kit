@@ -1,0 +1,43 @@
+summon kitml 1
+
+covenant Device
+  bound serial : text unique
+  model        : text
+seal
+
+covenant Laptop extends Device
+  memory : number GB
+seal
+
+covenant Person
+  name    : text
+  primary : -> Device
+  devices : list of -> Device
+  manager : -> Person optional
+seal
+
+soul lap is Laptop
+  bound serial = "L1"
+  model        = "Book"
+  memory       = 16 GB
+seal
+
+soul phone is Device
+  bound serial = "P1"
+  model        = "Phone"
+seal
+
+-- Links may form cycles: ana and bo manage each other.
+soul ana is Person
+  name     = "Ana"
+  primary -> lap
+  devices -> [lap, phone]
+  manager -> bo
+seal
+
+soul bo is Person
+  name     = "Bo"
+  primary -> phone
+  devices -> []
+  manager -> ana
+seal

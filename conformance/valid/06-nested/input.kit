@@ -1,0 +1,22 @@
+summon kitml 1
+
+covenant Settings
+  iso  : number whole
+  mode : one of [auto, manual]
+seal
+
+covenant Camera
+  sensor   : { width: number mm, height: number mm }
+  settings : Settings
+  network  : any
+seal
+
+soul c is Camera
+  sensor = { width: 3.6 cm, height: 24 mm }
+  settings
+    iso  = 200
+    mode = manual
+  network
+    ip   = "10.0.0.2"
+    dhcp = false
+seal

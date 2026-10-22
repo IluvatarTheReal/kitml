@@ -1,0 +1,24 @@
+summon kitml 1
+
+--[
+  A block comment
+  spanning lines.
+]--
+
+covenant Note open
+  body : text
+seal
+
+soul n is Note   -- a comment after a header
+  body = """
+    First line
+      indented
+    Last line
+    """
+  numbers = [
+    1,
+    2,   -- two
+    3,
+  ]
+  dash = "a -- not a comment"
+seal

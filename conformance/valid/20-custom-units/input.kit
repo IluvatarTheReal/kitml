@@ -1,0 +1,19 @@
+summon kitml 1
+
+unit frame-rate family rate
+  fps = 1
+seal
+
+unit storage family data
+  floppy = 1.44 MB
+seal
+
+covenant Clip
+  rate : number fps
+  size : number MB
+seal
+
+soul c is Clip
+  rate = 24 fps
+  size = 2 floppy
+seal

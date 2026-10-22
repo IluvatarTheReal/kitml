@@ -1,0 +1,15 @@
+summon kitml 1
+
+covenant Service
+  region : one of [us-east, eu-west]
+  replicas : number whole
+seal
+
+soul web is Service
+  region   = us-east
+  replicas = 1
+seal
+
+circle 1 europe always
+  web.region = eu-west
+seal

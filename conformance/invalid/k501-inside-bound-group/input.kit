@@ -1,0 +1,15 @@
+summon kitml 1
+
+covenant Box
+  dims : { w: number, h: number }
+seal
+
+soul b is Box
+  bound dims
+    w = 1
+    h = 2
+seal
+
+circle 1 resize
+  b.dims.w = 5
+seal

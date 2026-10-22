@@ -1,0 +1,20 @@
+summon kitml 1
+
+covenant Lens
+  mount : one of [RF, EF]
+seal
+
+covenant Camera
+  mount : one of [RF, EF]
+  lens  : -> Lens
+  require lens.mount == mount "Lens does not fit this camera"
+seal
+
+soul ef-50 is Lens
+  mount = EF
+seal
+
+soul cam is Camera
+  mount = RF
+  lens -> ef-50
+seal

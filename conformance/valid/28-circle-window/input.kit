@@ -1,0 +1,15 @@
+summon kitml 1 zone America/Toronto
+
+covenant Product
+  price : number money
+seal
+
+soul p is Product
+  price = 149.99 USD
+seal
+
+circle 1 canada
+  p.price = 199.99 CAD
+  from 2026-11-27 until 2026-12-01
+    p.price = 134.99 CAD
+seal

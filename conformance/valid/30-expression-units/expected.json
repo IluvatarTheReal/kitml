@@ -1,0 +1,1 @@
+{"t":{"$is":"Trip","distance":{"value":100,"unit":"km"},"duration":{"value":2,"unit":"h"},"speed":{"value":50,"unit":"km/h"},"speed-ms":{"value":13.8888888889,"unit":"m/s"},"area":{"value":12,"unit":"cm2"},"long":true}}

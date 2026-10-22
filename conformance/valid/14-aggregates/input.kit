@@ -1,0 +1,32 @@
+summon kitml 1
+
+covenant Server
+  cpus   : number whole
+  memory : number GB
+seal
+
+covenant Report
+  invoke total-memory = sum(all(Server).memory)
+  invoke big          = count(all(Server) where cpus >= 16)
+  invoke avg-cpus     = avg(all(Server).cpus)
+  invoke roomy        = all(Server) where memory > 16 GB
+  invoke smallest     = min(all(Server).memory)
+seal
+
+soul a is Server
+  cpus   = 8
+  memory = 16 GB
+seal
+
+soul b is Server
+  cpus   = 32
+  memory = 128 GB
+seal
+
+soul c is Server
+  cpus   = 16
+  memory = 512000 MB
+seal
+
+soul fleet is Report
+seal

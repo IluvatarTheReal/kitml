@@ -1,0 +1,1 @@
+{"index":{"$is":"Catalog","items":[{"$link":"alpha"},{"$link":"beta"}]},"alpha":{"$is":"Item","name":"Alpha"},"beta":{"$is":"Item","name":"Beta"}}

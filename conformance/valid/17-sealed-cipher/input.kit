@@ -1,0 +1,17 @@
+summon kitml 1
+
+key ops   = "kpub1abc"
+key audit = "kpub1def"
+
+covenant Database
+  host            : text
+  sealed password : text
+  cost            : number money
+seal
+
+soul db is Database
+  host = "db.internal"
+  sealed to [ops, audit]
+    password = sealed "kv1:9c2e7a41f"
+    cost     = sealed "kv1:5e88c0a19"
+seal

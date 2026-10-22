@@ -1,0 +1,1 @@
+{"api-1":{"$is":"Server","hostname":"api-1","region":"us-east","cpus":8,"memory":{"value":32,"unit":"GB"},"memory-per-cpu":{"value":4,"unit":"GB"},"fqdn":"api-1.us-east.example.com","memory-mib":{"value":30517.578125,"unit":"MiB"},"size":"small","label":"API-1"}}

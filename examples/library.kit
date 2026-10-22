@@ -1,0 +1,31 @@
+summon kitml 1
+
+-- Types
+covenant Author
+  name    : text
+  born    : date optional
+seal
+
+covenant Book
+  bound isbn : text matching "^97[89][0-9]{10}$"
+  title      : text
+  author     : -> Author
+  pages      : number between 1 and 5000
+  weight     : number g
+  genres     : list of text
+seal
+
+-- Records
+soul le-guin is Author
+  name = "Ursula K. Le Guin"
+  born = 1929-10-21
+seal
+
+soul earthsea is Book
+  bound isbn = "9780547773742"
+  title      = "A Wizard of Earthsea"
+  author    -> le-guin
+  pages      = 183
+  weight     = 0.25 kg       -- converted to 250 g
+  genres     = ["fantasy", "coming of age"]
+seal

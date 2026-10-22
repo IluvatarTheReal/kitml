@@ -1,0 +1,10 @@
+summon kitml 1
+
+circle 1 production
+  orders-api.replicas  = 6
+  orders-api.memory    = 2 GB
+  orders-api.log-level = warn
+  orders-api.domain    = "orders.example.com"
+  orders-db.host       = "orders-db.prod.internal"
+  orders-db.max-connections = 400
+seal

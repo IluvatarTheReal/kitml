@@ -1,0 +1,10 @@
+summon kitml 1
+
+covenant Device
+  serial : text
+seal
+
+covenant Phone extends Device
+  -- a covenant may tighten inherited rules, never loosen them
+  serial : text optional
+seal

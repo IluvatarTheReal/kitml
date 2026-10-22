@@ -1,0 +1,14 @@
+summon kitml 1
+
+covenant Camera
+  sensor : { width: number mm, height: number mm }
+seal
+
+soul c is Camera
+  sensor = { width: 36 mm, height: 24 mm }
+seal
+
+circle 1 crop
+  c.sensor.width  = 23.5 mm
+  c.sensor.height = 15.6 mm
+seal

@@ -1,0 +1,15 @@
+summon kitml 1
+
+covenant Trip
+  distance : number km
+  duration : number h
+  invoke speed = distance / duration
+  invoke speed-ms = distance / duration in m/s
+  invoke area : number cm2 = 3 cm * 4 cm
+  invoke long = duration > 90 min
+seal
+
+soul t is Trip
+  distance = 100 km
+  duration = 2 h
+seal

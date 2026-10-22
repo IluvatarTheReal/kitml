@@ -1,0 +1,32 @@
+summon kitml 1
+
+covenant Thing
+  label    : text
+  count    : number whole
+  ratio    : number
+  active   : bool
+  note     : text optional
+  nothing  : text optional
+  made     : date
+  stamp    : timestamp
+  kind     : one of [small, large]
+  tags     : list of text
+  big      : number
+  hexed    : number
+  negative : number
+seal
+
+soul t1 is Thing
+  label    = "Hello"
+  count    = 42
+  ratio    = 3.14
+  active   = true
+  nothing  = void
+  made     = 2026-10-22
+  stamp    = 2026-10-22T14:30:00-04:00
+  kind     = small
+  tags     = ["a", "b", "c",]
+  big      = 1_000_000
+  hexed    = 0xFF
+  negative = -7
+seal

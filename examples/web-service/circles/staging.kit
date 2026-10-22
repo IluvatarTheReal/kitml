@@ -1,0 +1,7 @@
+summon kitml 1
+
+circle 1 staging
+  orders-api.replicas = 2
+  orders-api.domain   = "staging.orders.example.com"
+  orders-db.host      = "orders-db.staging.internal"
+seal

@@ -1,0 +1,26 @@
+summon kitml 1
+
+covenant Room
+  capacity : number whole
+seal
+
+covenant Booking
+  check-in  : date
+  check-out : date
+  guests    : number whole between 1 and 8
+  room      : -> Room
+  require check-out > check-in      "Check-out must be after check-in"
+  require guests <= room.capacity   "Too many guests for this room"
+seal
+
+soul r101 is Room
+  capacity = 2
+seal
+
+soul b1 is Booking
+  check-in  = 2026-11-01
+  check-out = 2026-11-03
+  guests    = 2
+  room     -> r101
+  invoke nights = days(check-in, check-out)
+seal

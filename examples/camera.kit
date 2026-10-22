@@ -1,0 +1,76 @@
+summon kitml 1 zone America/Toronto
+
+key owner = "kpub1q8f3x9...n2d"
+
+covenant Lens
+  bound serial : text unique
+  focal-length : number mm between 8 mm and 800 mm
+  max-aperture : number between 0.95 and 32
+  mount        : one of [RF, EF, E, Z]
+seal
+
+covenant Settings
+  iso           : number whole between 100 and 51200
+  shutter       : fraction s between 1/8000 s and 30 s
+  aperture      : number
+  white-balance : number K between 2500 K and 10000 K
+seal
+
+covenant Camera
+  bound serial : text unique
+  model        : text
+  sensor       : { width: number mm, height: number mm, resolution: number MP }
+  mount        : one of [RF, EF, E, Z]
+  lens         : -> Lens
+  settings     : Settings
+  warranty     : text optional
+  sealed owner-name : text
+  sealed home-gps   : text
+  require lens.mount == mount                     "Lens does not fit this camera"
+  require settings.aperture >= lens.max-aperture  "Aperture wider than the lens allows"
+  invoke exposure : text = "{settings.shutter} at f/{settings.aperture}, ISO {settings.iso}"
+seal
+
+soul lens-35 is Lens
+  bound serial = "L35-20931"
+  focal-length = 35 mm
+  max-aperture = 1.8
+  mount        = RF
+seal
+
+soul lens-85 is Lens
+  bound serial = "L85-77310"
+  focal-length = 85 mm
+  max-aperture = 1.2
+  mount        = RF
+seal
+
+soul main-camera is Camera
+  bound serial = "R5-0042-1187"
+  model        = "Mirrorless R5"
+  sensor       = { width: 36 mm, height: 24 mm, resolution: 45 MP }
+  mount        = RF
+  lens        -> lens-35
+  settings
+    iso           = 100
+    shutter       = 1/250 s
+    aperture      = 5.6
+    white-balance = 5600 K
+  until 2027-10-22
+    warranty = "Manufacturer, 1 year"
+  sealed to owner
+    owner-name = "Jordan Lee"
+    home-gps   = "46.05, -71.96"
+seal
+
+circle 1 portrait
+  main-camera.lens             -> lens-85
+  main-camera.settings.aperture = 1.8
+seal
+
+circle 1 night
+  main-camera.settings.iso           = 6400
+  main-camera.settings.shutter       = 1/30 s
+  main-camera.settings.aperture      = 1.8
+  main-camera.settings.white-balance = 3200 K
+seal

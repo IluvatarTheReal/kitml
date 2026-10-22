@@ -1,0 +1,1 @@
+{"p":{"$is":"Parcel","weight":{"value":250,"unit":"g"},"length":{"value":200,"unit":"cm"},"timeout":{"value":120,"unit":"s"},"storage":{"value":1500,"unit":"MB"},"temp":{"value":293.15,"unit":"K"},"freq":{"value":2400,"unit":"MHz"},"share":{"value":15,"unit":"%"},"binary":{"value":1024,"unit":"MiB"}}}

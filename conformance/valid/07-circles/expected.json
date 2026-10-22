@@ -1,0 +1,1 @@
+{"web":{"$is":"Service","replicas":20,"log-level":"warn","memory":{"value":2000,"unit":"MB"}}}

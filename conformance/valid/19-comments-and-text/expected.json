@@ -1,0 +1,1 @@
+{"n":{"$is":"Note","body":"First line\n  indented\nLast line","numbers":[1,2,3],"dash":"a -- not a comment"}}

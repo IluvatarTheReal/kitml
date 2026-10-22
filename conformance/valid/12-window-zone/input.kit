@@ -1,0 +1,16 @@
+summon kitml 1 zone America/Toronto
+
+covenant Product
+  price         : number USD
+  badge         : text optional
+  free-shipping : bool optional
+seal
+
+soul p is Product
+  price = 149.99 USD
+  from 2026-11-27 until 2026-12-01
+    price = 99.99 USD
+    badge = "Black Friday"
+  until 2027-03-31
+    free-shipping = true
+seal
