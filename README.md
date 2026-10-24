@@ -12,7 +12,7 @@ Engine version 0.1.0 · Node.js 18 or later · no runtime dependencies.
 ```
 npm install
 npm run build
-npm test            # runs the conformance suite (81 cases)
+npm test            # runs the conformance suite (81 cases) with Vitest
 ```
 
 Use the CLI with `node dist/bin/kit.js …`, or `npm link` to get a `kit` command.

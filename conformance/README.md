@@ -43,6 +43,7 @@ The realm as exported by `kit to json` (sealed values hidden):
 ## Running
 
 ```
-npm test                      # build, then run every case
-node dist/conformance/run.js k501   # only cases whose name contains "k501"
+npm test                      # run every case
+npx vitest run -t k501        # only cases whose name contains "k501"
+npm run test:watch            # re-run on every change
 ```
