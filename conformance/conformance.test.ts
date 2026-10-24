@@ -5,7 +5,7 @@
 import * as fs from "fs";
 import * as path from "path";
 import { describe, expect, test } from "vitest";
-import { check, KitError, load, LoadOptions } from "../src/index";
+import { check, KitmlError, load, LoadOptions } from "../src/index";
 
 const ROOT = __dirname;
 const DEFAULT_AT = "2026-10-22T12:00:00Z";
@@ -23,7 +23,7 @@ function options(dir: string): CaseOptions {
 
 function runCase(dir: string): Record<string, unknown> {
   const o = options(dir);
-  const entry = path.join(dir, o.entry ?? "input.kit");
+  const entry = path.join(dir, o.entry ?? "input.kitml");
   return o.mode === "check" ? check(entry, o).realm.toJSON() : load(entry, o).toJSON();
 }
 
@@ -33,7 +33,7 @@ function cases(kind: string): [string, string][] {
 }
 
 function describeError(e: unknown): string {
-  return e instanceof KitError ? e.format() : String((e as Error).stack ?? e);
+  return e instanceof KitmlError ? e.format() : String((e as Error).stack ?? e);
 }
 
 describe("valid", () => {
@@ -61,7 +61,7 @@ describe("invalid", () => {
       error = e;
     }
     if (error === undefined) throw new Error(`expected ${code}, but the realm loaded without errors`);
-    if (!(error instanceof KitError)) throw new Error(`expected ${code}, got a crash: ${describeError(error)}`);
+    if (!(error instanceof KitmlError)) throw new Error(`expected ${code}, got a crash: ${describeError(error)}`);
     expect(error.code, error.message).toBe(code);
     if (line) expect(String(error.loc?.line), `line of ${code}`).toBe(line);
   });

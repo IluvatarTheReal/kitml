@@ -49,7 +49,7 @@ function quote(s: string): string {
   return '"' + s.replace(/\\/g, "\\\\").replace(/"/g, '\\"').replace(/\n/g, "\\n").replace(/\t/g, "\\t") + '"';
 }
 
-/** Renders a value the way it would be written in a .kit file. */
+/** Renders a value the way it would be written in a .kitml file. */
 export function toKitml(v: Value): string {
   switch (v.k) {
     case "text": return quote(v.v);
@@ -75,7 +75,7 @@ export function toPlain(v: Value): string {
   }
 }
 
-/** JSON form used by `kit to json` and Realm.toJSON(). */
+/** JSON form used by `kitml to json` and Realm.toJSON(). */
 export function toJSONValue(v: Value): unknown {
   switch (v.k) {
     case "text": case "date": case "ts": case "sym": return v.v;

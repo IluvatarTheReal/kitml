@@ -7,7 +7,7 @@
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
   "bin": {
-    "kit": "dist/bin/kit.js"
+    "kitml": "dist/bin/kitml.js"
   },
   "files": [
     "dist"
@@ -18,7 +18,7 @@
     "typecheck": "tsc -p . --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
-    "kit": "node dist/bin/kit.js"
+    "kitml": "node dist/bin/kitml.js"
   },
   "engines": {
     "node": ">=18"

@@ -1,0 +1,9 @@
+summon kitml 1
+
+possess "types.kitml"
+possess "data/*.kitml"
+possess "types.kitml"   -- possessing twice has no extra effect
+
+soul index is Catalog
+  items -> [alpha, beta]
+seal

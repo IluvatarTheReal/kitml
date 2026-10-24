@@ -1,13 +1,13 @@
 import * as path from "path";
 import { Checker } from "./checker";
-import { fail, KitError } from "./errors";
+import { fail, KitmlError } from "./errors";
 import { parseFile } from "./parser";
 import { Realm } from "./realm";
 import { buildCovenants, FileCache, layer, loadFiles, materialize, SoulData, todayFor } from "./resolver";
 import { dateIn, instant } from "./time";
 import { UnitRegistry } from "./units";
 
-export { KitError, ERROR_NAMES } from "./errors";
+export { KitmlError, ERROR_NAMES } from "./errors";
 export type { Loc } from "./errors";
 export { Realm, Quantity, Sealed } from "./realm";
 export type { OriginInfo, LinkRef, TimelineEvent, Soul } from "./realm";
@@ -72,14 +72,14 @@ function build(entry: string, opts: LoadOptions, cache: FileCache): Realm {
   });
 }
 
-/** Loads and checks a realm at one moment. Throws KitError on the first problem. */
+/** Loads and checks a realm at one moment. Throws KitmlError on the first problem. */
 export function load(file: string, opts: LoadOptions = {}): Realm {
   return build(path.resolve(file), opts, new Map());
 }
 
 /** Loads a realm from text instead of a file. `possess` paths resolve against `filename`. */
 export function loadText(text: string, opts: LoadOptions & { filename?: string } = {}): Realm {
-  const file = path.resolve(opts.filename ?? "inline.kit");
+  const file = path.resolve(opts.filename ?? "inline.kitml");
   const cache: FileCache = new Map([[file, parseFile(text, file)]]);
   return build(file, opts, cache);
 }
@@ -104,8 +104,8 @@ export function check(file: string, opts: LoadOptions = {}): CheckResult {
     try {
       build(entry, { ...opts, at: ms }, cache);
     } catch (e) {
-      if (e instanceof KitError) {
-        throw new KitError(e.code, `${e.message}. This becomes true on ${dateIn(ms, zone)}, when a time window starts or ends`, e.loc, e.hint);
+      if (e instanceof KitmlError) {
+        throw new KitmlError(e.code, `${e.message}. This becomes true on ${dateIn(ms, zone)}, when a time window starts or ends`, e.loc, e.hint);
       }
       throw e;
     }

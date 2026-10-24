@@ -54,17 +54,17 @@ const DEFAULT_HINTS: Record<string, string> = {
   "K-206": "Check the spelling, or add `open` after the covenant name to allow extra fields.",
   "K-501": "Bound values are permanent. Remove the override, or remove `bound` from the original.",
   "K-601": "Circles with the same number are alternatives. Activate only one, or give one a higher number.",
-  "K-701": "Encrypt the block with `kit seal` before committing (encryption is not available in engine 0.1).",
+  "K-701": "Encrypt the block with `kitml seal` before committing (encryption is not available in engine 0.1).",
 };
 
-export class KitError extends Error {
+export class KitmlError extends Error {
   readonly code: string;
   readonly loc?: Loc;
   readonly hint?: string;
 
   constructor(code: string, message: string, loc?: Loc, hint?: string) {
     super(message);
-    this.name = "KitError";
+    this.name = "KitmlError";
     this.code = code;
     this.loc = loc;
     this.hint = hint ?? DEFAULT_HINTS[code];
@@ -89,5 +89,5 @@ export class KitError extends Error {
 }
 
 export function fail(code: string, message: string, loc?: Loc, hint?: string): never {
-  throw new KitError(code, message, loc, hint);
+  throw new KitmlError(code, message, loc, hint);
 }

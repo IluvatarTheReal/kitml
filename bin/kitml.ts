@@ -1,18 +1,18 @@
 #!/usr/bin/env node
 import * as path from "path";
-import { check, ERROR_NAMES, KitError, load, LoadOptions, Realm, VERSION } from "../src/index";
+import { check, ERROR_NAMES, KitmlError, load, LoadOptions, Realm, VERSION } from "../src/index";
 import { toKitml, Value } from "../src/values";
 
-const HELP = `kit ${VERSION} — reference engine for Kitml
+const HELP = `kitml ${VERSION} — reference engine for Kitml
 
 Usage:
-  kit check <file>               Validate types, units, links, bonds, circles and every future time window
-  kit show <file> [path]         Print a soul, a field, or (with no path) every soul
-  kit origin <file> <path>       Show which layer, file and line set a value
-  kit links-to <file> <id>       List every field that links to a soul
-  kit timeline <file> <id>       List upcoming time-window changes for a soul
-  kit to json <file>             Export the loaded realm as JSON
-  kit errors                     List every error code
+  kitml check <file>               Validate types, units, links, bonds, circles and every future time window
+  kitml show <file> [path]         Print a soul, a field, or (with no path) every soul
+  kitml origin <file> <path>       Show which layer, file and line set a value
+  kitml links-to <file> <id>       List every field that links to a soul
+  kitml timeline <file> <id>       List upcoming time-window changes for a soul
+  kitml to json <file>             Export the loaded realm as JSON
+  kitml errors                     List every error code
 
 Options:
   --circle <name>      Apply a circle (repeatable, or comma-separated)
@@ -26,7 +26,7 @@ Options:
   -h, --help           Show this help
   -v, --version        Show the engine version
 
-Not in engine 0.1: kit seal, kit reseal (encryption), kit fmt, kit to yaml.`;
+Not in engine 0.1: kitml seal, kitml reseal (encryption), kitml fmt, kitml to yaml.`;
 
 interface Args {
   positional: string[];
@@ -68,7 +68,7 @@ function parseArgs(argv: string[]): Args {
 }
 
 function usage(msg: string): never {
-  console.error(`kit: ${msg}\nRun \`kit --help\` for usage.`);
+  console.error(`kitml: ${msg}\nRun \`kitml --help\` for usage.`);
   process.exit(2);
 }
 
@@ -214,7 +214,7 @@ function run(argv: string[]): void {
     }
     case "to": {
       const [format, file] = needFile(a, 2, "format and file");
-      if (format !== "json") usage(format === "yaml" ? "`kit to yaml` is not in engine 0.1; use `kit to json`" : `Unknown format "${format}"`);
+      if (format !== "json") usage(format === "yaml" ? "`kitml to yaml` is not in engine 0.1; use `kitml to json`" : `Unknown format "${format}"`);
       const realm = load(file, options(a));
       console.log(JSON.stringify(realm.toJSON({ reveal: a.reveal }), null, a.indent));
       return;
@@ -223,7 +223,7 @@ function run(argv: string[]): void {
       console.log(table(Object.entries(ERROR_NAMES).map(([c, n]) => [c, n])));
       return;
     case "seal": case "reseal": case "fmt":
-      usage(`\`kit ${cmd}\` is not available in engine 0.1`);
+      usage(`\`kitml ${cmd}\` is not available in engine 0.1`);
     default:
       usage(`Unknown command "${cmd}"`);
   }
@@ -232,10 +232,10 @@ function run(argv: string[]): void {
 try {
   run(process.argv.slice(2));
 } catch (e) {
-  if (e instanceof KitError) {
+  if (e instanceof KitmlError) {
     console.error(e.format());
     process.exit(1);
   }
-  console.error(`kit: ${(e as Error).message}`);
+  console.error(`kitml: ${(e as Error).message}`);
   process.exit(2);
 }

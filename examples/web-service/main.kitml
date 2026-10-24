@@ -1,8 +1,8 @@
 summon kitml 1
 
-possess "types.kit"
-possess "teams.kit"
-possess "circles/*.kit"
+possess "types.kitml"
+possess "teams.kitml"
+possess "circles/*.kitml"
 
 key ops = "kpub1z7k2m4...p0a"
 
@@ -22,7 +22,7 @@ soul orders-api is Service
   log-level  = debug
   domain     = "localhost:8080"
   database  -> orders-db
-  owner     -> platform-team       -- defined in teams.kit
+  owner     -> platform-team       -- defined in teams.kitml
   cert       = "certs/2026.pem"
   from 2026-12-15
     cert     = "certs/2027.pem"    -- new certificate takes over automatically

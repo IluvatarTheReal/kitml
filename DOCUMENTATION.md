@@ -6,7 +6,7 @@ Oct 22, 2026 · @FieryImp
 
 Kitml is a data language whose records have identity, types, layers, lifetimes and secrets built in. Where YAML and JSON describe a tree of values, Kitml describes a **realm**: a set of typed records (souls) that link to each other, can be layered for different environments, can expire, and can hide fields from unauthorised readers.
 
-The keywords come from infernal lore (a deal is binding, a true name grants power, the underworld has circles), and each one names a real rule the loader enforces. Files use the `.kit` extension and the media type `application/kitml`, and are always UTF-8. This is version 1 of the specification.
+The keywords come from infernal lore (a deal is binding, a true name grants power, the underworld has circles), and each one names a real rule the loader enforces. Files use the `.kitml` extension and the media type `application/kitml`, and are always UTF-8. This is version 1 of the specification.
 
 ### Six core ideas
 
@@ -52,7 +52,7 @@ Units (`35 mm`, `30 s`, `4 GB`, `19.99 USD`) are part of the value, and computed
 
 ## Quick start
 
-A Kitml file declares its types, then its records. Save this as `library.kit`:
+A Kitml file declares its types, then its records. Save this as `library.kitml`:
 
 ```kitml
 summon kitml 1
@@ -91,9 +91,9 @@ seal
 Check and read it:
 
 ```text
-kit check library.kit          # validates types, links and units
-kit show library.kit earthsea  # prints one soul, links resolved
-kit to json library.kit        # exports plain JSON
+kitml check library.kitml          # validates types, links and units
+kitml show library.kitml earthsea  # prints one soul, links resolved
+kitml to json library.kitml        # exports plain JSON
 ```
 
 The JSON export, with links written as IDs and quantities in the covenant's unit:
@@ -118,14 +118,14 @@ In code, links are followed like ordinary fields:
 ```python
 import kitml
 
-realm = kitml.load("library.kit")
+realm = kitml.load("library.kitml")
 book = realm["earthsea"]
 print(book.author.name)       # Ursula K. Le Guin
 print(book.weight.to("oz"))   # 8.82 oz
 realm.links_to("le-guin")     # [earthsea]
 ```
 
-If `pages` were `0`, `author` pointed to a missing soul, or `weight` were `250 ml`, `kit check` would stop with an error naming the line.
+If `pages` were `0`, `author` pointed to a missing soul, or `weight` were `250 ml`, `kitml check` would stop with an error naming the line.
 
 ## Syntax basics
 
@@ -359,7 +359,7 @@ realm["api-1"].owner.email     # "platform@example.com"
 The loader indexes every link in both directions, so you can ask what points at a soul without scanning:
 
 ```text
-$ kit links-to fleet.kit platform-team
+$ kitml links-to fleet.kitml platform-team
 api-1.owner      -> platform-team
 api-2.owner      -> platform-team
 db-main.owner    -> platform-team
@@ -386,8 +386,8 @@ seal
 ```
 
 ```text
-K-501 Broken Bond  at fleet.kit:12:3
-  payments-db.name is bound at fleet.kit:2:3 and cannot be changed by circle 3 (staging).
+K-501 Broken Bond  at fleet.kitml:12:3
+  payments-db.name is bound at fleet.kitml:2:3 and cannot be changed by circle 3 (staging).
 ```
 
 ### Rules
@@ -452,11 +452,11 @@ Loading with `--circle production --circle black-friday` gives 20 replicas, `war
 Every loaded value knows where it came from.
 
 ```text
-$ kit origin service.kit web.replicas --circle production --circle black-friday
+$ kitml origin service.kitml web.replicas --circle production --circle black-friday
 web.replicas = 20
-  circle 2 black-friday   service.kit:22   20   (active, wins)
-  circle 1 production     service.kit:14   6    (overridden)
-  circle 0 base           service.kit:2    1    (overridden)
+  circle 2 black-friday   service.kitml:22   20   (active, wins)
+  circle 1 production     service.kitml:14   6    (overridden)
+  circle 0 base           service.kitml:2    1    (overridden)
 ```
 
 In code: `realm.origin("web.replicas")`. This answers "why is this value what it is?" without reading every file.
@@ -492,23 +492,23 @@ Loaded on 2026-11-28, the price is 99.99 USD with the badge and free shipping. O
 The loader evaluates windows at the current time unless told otherwise, so you can preview the future or replay the past:
 
 ```text
-kit show store.kit headphones --at 2026-11-28
+kitml show store.kitml headphones --at 2026-11-28
 ```
 
 ```python
-realm = kitml.load("store.kit", at="2026-11-28")
+realm = kitml.load("store.kitml", at="2026-11-28")
 ```
 
 ### Checking every future
 
-A soul can be valid today and invalid next month, for example when a required field only exists inside a window that expires. `kit check` therefore checks every soul at every window boundary, not only at the current time:
+A soul can be valid today and invalid next month, for example when a required field only exists inside a window that expires. `kitml check` therefore checks every soul at every window boundary, not only at the current time:
 
 ```text
-K-202 Missing Field  at hr.kit:9:3
+K-202 Missing Field  at hr.kitml:9:3
   employee-42.badge-id is required but disappears on 2027-01-01 (until window ends).
 ```
 
-`kit timeline store.kit headphones` lists every upcoming change for a soul in date order.
+`kitml timeline store.kitml headphones` lists every upcoming change for a soul in date order.
 
 ## Sealed fields
 
@@ -525,7 +525,7 @@ key finance = "kpub1z7k2m4...p0a"
 
 ### Writing sealed fields
 
-Write sealed values in plain text while editing, then run `kit seal` to encrypt them in place.
+Write sealed values in plain text while editing, then run `kitml seal` to encrypt them in place.
 
 ```kitml
 soul payments-db is Database
@@ -540,7 +540,7 @@ soul payments-db is Database
 seal
 ```
 
-After `kit seal fleet.kit`:
+After `kitml seal fleet.kitml`:
 
 ```kitml
   sealed to ops
@@ -555,10 +555,10 @@ Field names stay visible, so diffs and reviews still show what changed; only the
 ### Reading sealed fields
 
 ```python
-realm = kitml.load("fleet.kit", keys={"ops": "~/.kit/ops.key"})
+realm = kitml.load("fleet.kitml", keys={"ops": "~/.kitml/ops.key"})
 realm["payments-db"].password      # "correct-horse-battery"
 
-realm = kitml.load("fleet.kit")     # no keys
+realm = kitml.load("fleet.kitml")     # no keys
 realm["payments-db"].password      # Sealed(to=["ops"])
 realm["payments-db"].port          # 5432, open fields still work
 ```
@@ -567,10 +567,10 @@ Without the key, a sealed field loads as a `Sealed` marker rather than failing, 
 
 ### Safety checks
 
-- `kit check --strict` fails with K-701 (Exposed Secret) if any `sealed to` block still holds plain text. Run it in CI or a pre-commit hook.
+- `kitml check --strict` fails with K-701 (Exposed Secret) if any `sealed to` block still holds plain text. Run it in CI or a pre-commit hook.
 - A modified or corrupted ciphertext is K-702 (Tampered Seal).
 - A covenant field marked `sealed` (for example `sealed password : text`) must sit inside a `sealed to` block in every soul, or K-703.
-- `kit reseal fleet.kit --add-key auditor` re-encrypts blocks for a new key; removing a key requires rotating the secrets themselves.
+- `kitml reseal fleet.kitml --add-key auditor` re-encrypts blocks for a new key; removing a key requires rotating the secrets themselves.
 
 ## Invocations and possession
 
@@ -628,22 +628,22 @@ Expressions are pure: no file, network or clock access other than `today` (which
 ```kitml
 summon kitml 1
 
-possess "types.kit"
-possess "teams.kit"
-possess "servers/*.kit"          -- every matching file, in name order
-possess "circles/production.kit"
+possess "types.kitml"
+possess "teams.kitml"
+possess "servers/*.kitml"          -- every matching file, in name order
+possess "circles/production.kitml"
 ```
 
 - Paths are relative to the possessing file. Each possessed file has its own summoning line.
-- Everything shares one namespace: a soul in `servers/api.kit` can link to a team in `teams.kit` by ID alone.
+- Everything shares one namespace: a soul in `servers/api.kitml` can link to a team in `teams.kitml` by ID alone.
 - Possessing a file twice has no extra effect. A loop of files possessing each other is K-802; a missing file is K-803.
 - Paths outside the starting folder are refused unless the loader is given `--allow-outside`.
 
 ## Full examples
 
-Three realistic files, each combining several features: a camera kit, a web service across environments, and a store catalog with regional pricing and sales.
+Three realistic files, each combining several features: a camera rig, a web service across environments, and a store catalog with regional pricing and sales.
 
-### Example 1: Camera kit with shooting presets (`camera.kit`)
+### Example 1: Camera rig with shooting presets (`camera.kitml`)
 
 Shows covenants with units, linked lenses, a cross-field rule, a bound serial, circles as presets, an expiring warranty, sealed owner data and a computed label.
 
@@ -727,10 +727,10 @@ seal
 ```
 
 ```text
-$ kit show camera.kit main-camera.exposure --circle night
+$ kitml show camera.kitml main-camera.exposure --circle night
 "1/30 s at f/1.8, ISO 6400"
 
-$ kit show camera.kit main-camera.exposure --circle portrait
+$ kitml show camera.kitml main-camera.exposure --circle portrait
 "1/250 s at f/1.8, ISO 100"
 ```
 
@@ -742,15 +742,15 @@ A project split over several files. Shows possession, links across files, bound 
 
 ```text
 config/
-├── main.kit
-├── types.kit
-├── teams.kit
+├── main.kitml
+├── types.kitml
+├── teams.kitml
 └── circles/
-    ├── staging.kit
-    └── production.kit
+    ├── staging.kitml
+    └── production.kitml
 ```
 
-`types.kit`:
+`types.kitml`:
 
 ```kitml
 summon kitml 1
@@ -784,14 +784,14 @@ covenant Service
 seal
 ```
 
-`main.kit`:
+`main.kitml`:
 
 ```kitml
 summon kitml 1
 
-possess "types.kit"
-possess "teams.kit"
-possess "circles/*.kit"
+possess "types.kitml"
+possess "teams.kitml"
+possess "circles/*.kitml"
 
 key ops = "kpub1z7k2m4...p0a"
 
@@ -811,14 +811,14 @@ soul orders-api is Service
   log-level  = debug
   domain     = "localhost:8080"
   database  -> orders-db
-  owner     -> platform-team       -- defined in teams.kit
+  owner     -> platform-team       -- defined in teams.kitml
   cert       = "certs/2026.pem"
   from 2026-12-15
     cert     = "certs/2027.pem"    -- new certificate takes over automatically
 seal
 ```
 
-`circles/production.kit`:
+`circles/production.kitml`:
 
 ```kitml
 summon kitml 1
@@ -836,7 +836,7 @@ seal
 The application loads it once at startup:
 
 ```python
-realm = kitml.load("config/main.kit",
+realm = kitml.load("config/main.kitml",
                    circles=[os.environ["APP_ENV"]],
                    keys={"ops": "/run/secrets/ops.key"})
 api = realm["orders-api"]
@@ -846,7 +846,7 @@ serve(api.url, replicas=api.replicas, cert=api.cert)
 
 With `APP_ENV=production` this connects to `orders-db.prod.internal` and serves `https://orders.example.com`; from 2026-12-15 it picks up the new certificate with no deploy.
 
-### Example 3: Store catalog with regional prices and sales (`store.kit`)
+### Example 3: Store catalog with regional prices and sales (`store.kitml`)
 
 Shows money units, links to categories and suppliers, sale windows, a regional circle, sealed supplier costs and computed discounts and margins.
 
@@ -914,7 +914,7 @@ seal
 ```
 
 ```text
-$ kit show store.kit studio-headphones --at 2026-11-28 --fields price,discount,in-stock
+$ kitml show store.kitml studio-headphones --at 2026-11-28 --fields price,discount,in-stock
 price     = 99.99 USD
 discount  = 33 %
 in-stock  = true
@@ -924,19 +924,19 @@ The `canada` circle switches the product to CAD prices with its own sale window.
 
 ## Tooling, API, errors and grammar
 
-### The `kit` command
+### The `kitml` command
 
 | Command | Does |
 | --- | --- |
-| `kit check main.kit` | Validates syntax, types, units, links, bonds and every time-window boundary |
-| `kit check main.kit --strict` | Also fails on unsealed secrets (K-701); use in CI |
-| `kit show main.kit <path>` | Prints a soul or field with links resolved |
-| `kit origin main.kit <path>` | Shows which circle, file and line set a value |
-| `kit links-to main.kit <id>` | Lists every link pointing at a soul |
-| `kit timeline main.kit <id>` | Lists upcoming time-window changes in date order |
-| `kit seal` / `kit reseal` | Encrypts sealed blocks / re-encrypts for a changed key list |
-| `kit to json` / `kit to yaml` | Exports the loaded realm |
-| `kit fmt main.kit` | Rewrites with aligned columns and standard spacing |
+| `kitml check main.kitml` | Validates syntax, types, units, links, bonds and every time-window boundary |
+| `kitml check main.kitml --strict` | Also fails on unsealed secrets (K-701); use in CI |
+| `kitml show main.kitml <path>` | Prints a soul or field with links resolved |
+| `kitml origin main.kitml <path>` | Shows which circle, file and line set a value |
+| `kitml links-to main.kitml <id>` | Lists every link pointing at a soul |
+| `kitml timeline main.kitml <id>` | Lists upcoming time-window changes in date order |
+| `kitml seal` / `kitml reseal` | Encrypts sealed blocks / re-encrypts for a changed key list |
+| `kitml to json` / `kitml to yaml` | Exports the loaded realm |
+| `kitml fmt main.kitml` | Rewrites with aligned columns and standard spacing |
 
 Common flags: `--circle <name>` (repeatable), `--at <date>`, `--key <name>=<file>`, `--reveal`.
 
@@ -948,14 +948,14 @@ The same options exist in every reader. Python:
 import kitml
 
 realm = kitml.load(
-    "config/main.kit",
+    "config/main.kitml",
     circles=["production"],          # layers to apply
     at="2026-11-28",                 # moment for time windows (default: now)
     keys={"ops": "/run/secrets/ops.key"},
 )
 
 realm["orders-api"].replicas        # 6
-realm.origin("orders-api.replicas")  # circle 1 production, circles/production.kit:4
+realm.origin("orders-api.replicas")  # circle 1 production, circles/production.kitml:4
 realm.links_to("orders-db")          # [orders-api]
 realm.all("Service")                 # every soul of that covenant
 realm.to_json()
@@ -1070,5 +1070,5 @@ circle 1 warehouse                      -- layer, chosen at load time
   banish box-1.notes
 seal
 
-possess "more-things.kit"               -- add another file to the realm
+possess "more-things.kitml"               -- add another file to the realm
 ```

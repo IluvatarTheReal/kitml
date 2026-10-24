@@ -9,11 +9,11 @@ another language only needs to read folders and compare JSON.
 ```
 conformance/
 ├── valid/<case>/
-│   ├── input.kit          entry file (other .kit files may sit beside it)
+│   ├── input.kitml        entry file (other .kitml files may sit beside it)
 │   ├── options.json       optional load options
 │   └── expected.json      the realm exported as JSON
 └── invalid/<case>/
-    ├── input.kit
+    ├── input.kitml
     ├── options.json       optional
     └── expected-error     first line: the error code; optional "line: N"
 ```
@@ -26,11 +26,11 @@ conformance/
 | `circles` | Circles to activate, by name | `[]` |
 | `strict` | Fail on plain text inside `sealed to` blocks (K-701) | `false` |
 | `mode` | `"load"` checks at `at` only; `"check"` also checks every future time-window boundary | `"load"` |
-| `entry` | Entry file name | `input.kit` |
+| `entry` | Entry file name | `input.kitml` |
 
 ## expected.json
 
-The realm as exported by `kit to json` (sealed values hidden):
+The realm as exported by `kitml to json` (sealed values hidden):
 
 - Each soul is an object keyed by its ID, with `"$is"` naming its covenant.
 - Plain numbers are JSON numbers; quantities are `{"value": 250, "unit": "g"}`;
